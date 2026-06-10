@@ -27,7 +27,17 @@ create table tb_venda (
 
 );
 
+-- Tabela de processamento financeiro da compra
+create table tb_pagamento(
+	id_pagamento int PRIMARY key AUTO_INCREMENT,
+	id_venda int unique not null,
+	tipo_pagamento varchar(30) not null,
+	valor_pago decimal(10,2) not null check(valor_pago > 0),
+	data_pagamento datetime DEFAULT CURRENT_TIMESTAMP,
+	status_pagamento varchar(20) DEFAULT 'aprovado',
+	FOREIGN key (id_venda) REFERENCES tb_venda(id_venda)
 
+);
 
 
 
