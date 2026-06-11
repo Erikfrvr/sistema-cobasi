@@ -4,11 +4,11 @@ USE bd_cobasi;
 CREATE TABLE tb_cliente (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(150) NOT NULL UNIQUE,
+    cpf VARBINARY(255) NOT NULL UNIQUE,
     email VARCHAR(150) NOT NULL UNIQUE,
     telefone VARCHAR(20),
-    senha VARCHAR(150) NOT NULL,
-    saldo_pontos INT DEFAULT 0,
+    senha VARBINARY(150) NOT NULL,
+    saldo_pontos INT DEFAULT 0 CHECK(saldo_pontos >= 0),
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
