@@ -12,8 +12,8 @@ CREATE TABLE tb_item_venda(
 	subtotal DECIMAL(10,2),
 
 	FOREIGN KEY(id_venda)
-	REFERENCES venda(id_venda),
+	REFERENCES tb_venda(id_venda),
 
 	FOREIGN KEY(id_produto)
-	REFERENCES produto(id_produto)
+	REFERENCES tb_produto(id_produto)
 );

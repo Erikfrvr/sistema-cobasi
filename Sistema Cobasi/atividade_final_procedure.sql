@@ -8,13 +8,13 @@ DELIMITER //
 CREATE PROCEDURE sp_cadastrar_cliente(
 IN c_nome VARCHAR(100),
 IN c_cpf VARCHAR(14),
-IN c_email VARCHAR(100),
+IN c_email VARCHAR(150),
 IN c_telefone VARCHAR(20),
 IN c_senha VARCHAR(100)
 )
 BEGIN
 
-IF u_nome IS NULL OR u_nome = '' THEN
+IF c_nome IS NULL OR c_nome = '' THEN
 SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT='Nome obrigatório';
 END IF;
@@ -24,7 +24,7 @@ SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT='Email inválido';
 END IF;
 
-INSERT INTO cliente(
+INSERT INTO tb_cliente(
 nome,
 cpf,
 email,
@@ -66,7 +66,7 @@ SIGNAL SQLSTATE '45000'
 SET MESSAGE_TEXT='Estoque inválido';
 END IF;
 
-INSERT INTO produto(
+INSERT INTO tb_produto(
 nome,
 descricao,
 preco,
