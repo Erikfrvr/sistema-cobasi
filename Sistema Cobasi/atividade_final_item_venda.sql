@@ -1,9 +1,9 @@
 -- Estrutura de Itens: Scripts de tb_item_venda 
 
-CREATE DATABASE db_amigo_cobasi;
-USE db_amigo_cobasi;
+CREATE DATABASE IF NOT EXISTS bd_cobasi;
+USE bd_cobasi;
 
-CREATE TABLE item_venda(
+CREATE TABLE tb_item_venda(
 	id_item INT AUTO_INCREMENT PRIMARY KEY,
 	id_venda INT NOT NULL,
 	id_produto INT NOT NULL,
@@ -12,8 +12,8 @@ CREATE TABLE item_venda(
 	subtotal DECIMAL(10,2),
 
 	FOREIGN KEY(id_venda)
-	REFERENCES tb_venda(id_venda),
+	REFERENCES venda(id_venda),
 
 	FOREIGN KEY(id_produto)
-	REFERENCES tb_produto(id_produto)
+	REFERENCES produto(id_produto)
 );
