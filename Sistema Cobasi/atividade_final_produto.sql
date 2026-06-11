@@ -1,9 +1,9 @@
 -- Estrutura de Produtos: Scripts de tb_produto
 
-CREATE DATABASE db_amigo_cobasi;
-USE db_amigo_cobasi;
+CREATE DATABASE IF NOT EXISTS bd_cobasi;
+USE bd_cobasi;
 
-CREATE TABLE produto(
+CREATE TABLE tb_produto(
 	id_produto INT AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
 	descricao VARCHAR(255),
