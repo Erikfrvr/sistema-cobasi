@@ -134,6 +134,46 @@ DELIMITER ;
 
 DELIMITER //
 
+CREATE PROCEDURE sp_cadastrar_cliente(
+IN c_nome VARCHAR(100),
+IN c_cpf VARCHAR(14),
+IN c_email VARCHAR(150),
+IN c_telefone VARCHAR(20),
+IN c_senha VARCHAR(100)
+)
+BEGIN
+
+IF c_nome IS NULL OR c_nome = '' THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT='Nome obrigatório';
+END IF;
+
+IF c_email NOT LIKE '%@%' THEN
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT='Email inválido';
+END IF;
+
+INSERT INTO tb_cliente(
+nome,
+cpf,
+email,
+telefone,
+senha
+)
+VALUES(
+c_nome,
+AES_ENCRYPT(c_cpf,'cobasi2026'),
+c_email,
+c_telefone,
+AES_ENCRYPT(c_senha,'cobasi2026')
+);
+
+END//
+
+DELIMITER ;
+
+DELIMITER //
+
 CREATE PROCEDURE sp_registrar_produto(
 IN p_nome VARCHAR(100),
 IN p_descricao VARCHAR(255),
