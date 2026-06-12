@@ -21,3 +21,4 @@ Siga o passo a passo abaixo para rodar o banco de dados localmente usando o XAMP
 Abra o seu terminal (ou o Git Bash) na pasta onde deseja salvar o projeto e execute:
 ```bash
 git clone https://github.com/Erikfrvr/sistema-caixa-cobasi.git
+cd sistema-caixa-cobasi
