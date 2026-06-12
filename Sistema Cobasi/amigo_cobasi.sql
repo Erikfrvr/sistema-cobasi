@@ -241,3 +241,64 @@ INNER JOIN tb_item_venda iv
 ON p.id_produto = iv.id_produto
 GROUP BY p.nome
 ORDER BY total_vendido DESC;
+
+-- cadastrando os produtos iniciais da loja
+CALL sp_registrar_produto('Ração Cães Adultos 20kg', 'Saco de 20kg sabor carne', 180.00, 50, 'Cachorros');
+CALL sp_registrar_produto('Ração Golden Gatos Castrados', 'Pacote 10kg frango', 120.50, 30, 'Gatos');
+CALL sp_registrar_produto('Cistimicin Vet', 'Suplemento para pets', 85.90, 20, 'Medicamentos');
+CALL sp_registrar_produto('Peitoral para Corrida', 'Peitoral ajustável para cães', 65.00, 15, 'Acessórios');
+-- checando se os produtos entraram com o estoque correto
+SELECT id_produto, nome, preco, estoque FROM tb_produto;
+
+-- cadastrando a equipe como clientes (senhas e CPFs entram criptografados)
+CALL sp_cadastrar_cliente('Gabriel', '111.111.111-11', 'gabriel@email.com', '11999999999', 'senha123');
+CALL sp_cadastrar_cliente('Rafael', '222.222.222-22', 'rafael@email.com', '11888888888', 'senha456');
+CALL sp_cadastrar_cliente('Ana Paula Souza', '101.202.303-40', 'ana.souza@email.com', '11988887777', 'senha123');
+CALL sp_cadastrar_cliente('Carlos Eduardo Silva', '505.606.707-80', 'carlos.edu@email.com', '11977776666', 'senha123');
+CALL sp_cadastrar_cliente('Mariana Costa', '303.404.505-60', 'mari.costa@email.com', '11966665555', 'senha123');
+CALL sp_cadastrar_cliente('Lucas Oliveira', '808.909.101-20', 'lucas.oli@email.com', '11955554444', 'senha123');
+CALL sp_cadastrar_cliente('Beatriz Santos', '202.303.404-50', 'beatriz.s@email.com', '11944443333', 'senha123');
+CALL sp_cadastrar_cliente('Roberto Alves', '123.987.456-11', 'roberto.alves@email.com', '11933332222', 'senha123');
+CALL sp_cadastrar_cliente('Juliana Martins', '321.654.987-22', 'ju.martins@email.com', '11922221111', 'senha123');
+
+-- conferindo se os clientes entraram e se o saldo inicial é 0
+SELECT id_cliente, nome, email, saldo_pontos FROM tb_cliente;
+-- simulacao de vendas no caixa usando a transacao complexa
+-- gabriel compra 1 saco de racao no pix
+CALL sp_registrar_venda_completa(1, 1, 1, 'Pix');
+-- rafael compra 2 caixas de cistimicin no cartao
+CALL sp_registrar_venda_completa(2, 3, 2, 'Cartão de Crédito');
+-- gabriel volta e compra 1 peitoral no dinheiro
+CALL sp_registrar_venda_completa(1, 4, 1, 'Dinheiro');
+-- validando se o estoque baixou corretamente apos as transacoes
+SELECT id_produto, nome, estoque AS estoque_atualizado FROM tb_produto;
+-- conferindo os pontos do programa amigo cobasi
+SELECT nome, saldo_pontos AS pontos_acumulados FROM tb_cliente;
+-- verificando o preenchimento das tabelas de operacao (integridade referencial)
+SELECT * FROM tb_venda;
+SELECT * FROM tb_item_venda;
+SELECT * FROM tb_pagamento;
+-- puxando as views de relatorios gerenciais
+SELECT * FROM relatorio_vendas;
+SELECT * FROM clientes_ativos;
+SELECT * FROM produtos_mais_vendidos;
+
+-- select completo teste
+SELECT
+    id_cliente,
+    nome,
+    email,
+    cpf AS cpf_trancado_binario,
+    AES_DECRYPT(cpf, 'cobasi2026') AS cpf_descriptografado,
+    saldo_pontos
+FROM tb_cliente;
+
+-- puxando o relatorio de todas as vendas que passaram no caixa
+SELECT * FROM relatorio_vendas;
+ 
+-- listando os clientes que tao comprando com a gente
+-- isso aqui mostra o nome do cliente e conta quantas compras ele ja fez na loja
+SELECT * FROM clientes_ativos;
+ 
+-- ranking do que mais ta vendendo na cobasi
+SELECT * FROM produtos_mais_vendidos;
